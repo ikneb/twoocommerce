@@ -45,6 +45,15 @@ class WC_Your_Shipping_Method extends WC_Shipping_Method
      * @return void
      */
     public function calculate_shipping( $package ) {
-        // This is where you'll add your rates
+
+        $rate = array(
+            'id'       => $this->id,
+            'label'    => "Label for the rate",
+            'cost'     => '10.99',
+            'calc_tax' => 'per_item'
+        );
+
+// Register the rate
+        $this->add_rate( $rate );
     }
 }

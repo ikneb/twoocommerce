@@ -25,17 +25,17 @@ class Test
     public function initHooks()
     {
 
-        add_action('woocommerce_before_cart', array($this, 'testFunc'));
+        add_action('init', array($this, 'testFunc'));
         add_filter('woocommerce_get_sections_product', array($this, 'wcslider_add_section'));
         add_filter('woocommerce_get_settings_product', array($this, 'wcslider_all_settings'), 10, 2);
 
-        add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
-        add_action( 'woocommerce_settings_tabs_tab_demo', __CLASS__ . '::settings_tab' );
-        add_action( 'woocommerce_update_options_tab_demo', __CLASS__ . '::update_settings' );
+        add_filter('woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50);
+        add_action('woocommerce_settings_tabs_tab_demo', __CLASS__ . '::settings_tab');
+        add_action('woocommerce_update_options_tab_demo', __CLASS__ . '::update_settings');
 
         //add shiping method
-        add_action( 'woocommerce_shipping_init', 'your_shipping_method_init' );
-        add_filter( 'woocommerce_shipping_methods', 'add_your_shipping_method' );
+        add_action('woocommerce_shipping_init', 'your_shipping_method_init');
+        add_filter('woocommerce_shipping_methods', 'add_your_shipping_method');
 
 
     }
@@ -47,8 +47,9 @@ class Test
      * @param array $settings_tabs Array of WooCommerce setting tabs & their labels, excluding the Subscription tab.
      * @return array $settings_tabs Array of WooCommerce setting tabs & their labels, including the Subscription tab.
      */
-    public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['tab_demo'] = __( 'Settings Demo Tab', 'woocommerce-settings-tab-demo' );
+    public static function add_settings_tab($settings_tabs)
+    {
+        $settings_tabs['tab_demo'] = __('Settings Demo Tab', 'woocommerce-settings-tab-demo');
         return $settings_tabs;
     }
 
@@ -58,8 +59,9 @@ class Test
      * @uses woocommerce_admin_fields()
      * @uses self::get_settings()
      */
-    public static function settings_tab() {
-        woocommerce_admin_fields( self::get_settings() );
+    public static function settings_tab()
+    {
+        woocommerce_admin_fields(self::get_settings());
     }
 
 
@@ -69,8 +71,9 @@ class Test
      * @uses woocommerce_update_options()
      * @uses self::get_settings()
      */
-    public static function update_settings() {
-        woocommerce_update_options( self::get_settings() );
+    public static function update_settings()
+    {
+        woocommerce_update_options(self::get_settings());
     }
 
     /**
@@ -78,34 +81,35 @@ class Test
      *
      * @return array Array of settings for @see woocommerce_admin_fields() function.
      */
-    public static function get_settings() {
+    public static function get_settings()
+    {
 
 
         $settings = array(
             'section_title' => array(
-                'name'     => __( 'Section Title', 'woocommerce-settings-tab-demo' ),
-                'type'     => 'title',
-                'desc'     => '',
-                'id'       => 'wc_settings_tab_demo_section_title'
+                'name' => __('Section Title', 'woocommerce-settings-tab-demo'),
+                'type' => 'title',
+                'desc' => '',
+                'id' => 'wc_settings_tab_demo_section_title'
             ),
             'title' => array(
-                'name' => __( 'Title', 'woocommerce-settings-tab-demo' ),
+                'name' => __('Title', 'woocommerce-settings-tab-demo'),
                 'type' => 'text',
-                'desc' => __( 'This is some helper text', 'woocommerce-settings-tab-demo' ),
-                'id'   => 'wc_settings_tab_demo_title'
+                'desc' => __('This is some helper text', 'woocommerce-settings-tab-demo'),
+                'id' => 'wc_settings_tab_demo_title'
             ),
             'description' => array(
-                'name' => __( 'Description', 'woocommerce-settings-tab-demo' ),
+                'name' => __('Description', 'woocommerce-settings-tab-demo'),
                 'type' => 'textarea',
-                'desc' => __( 'This is a paragraph describing the setting. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda.', 'woocommerce-settings-tab-demo' ),
-                'id'   => 'wc_settings_tab_demo_description'
+                'desc' => __('This is a paragraph describing the setting. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda.', 'woocommerce-settings-tab-demo'),
+                'id' => 'wc_settings_tab_demo_description'
             ),
             array(
-                'title'    => __( 'Enable Test', 'some-text-domain' ),
-                'desc'     => __( 'Enable test options', 'some-text-domain' ),
-                'id'       => 'test_option',
-                'type'     => 'checkbox',
-                'default'  => get_option('test_option'),
+                'title' => __('Enable Test', 'some-text-domain'),
+                'desc' => __('Enable test options', 'some-text-domain'),
+                'id' => 'test_option',
+                'type' => 'checkbox',
+                'default' => get_option('test_option'),
             ),
             array(
                 'name' => __('Field 1', 'text-domain'),
@@ -114,16 +118,16 @@ class Test
                 'default' => get_option('field_one'),
             ),
             array(
-                'id'          => 'woocommerce_shop_page_display',
-                'option_key'  => 'woocommerce_shop_page_display',
-                'name'       => __( 'Shop Page Display', 'woocommerce' ),
-                'desc' => __( 'This controls what is shown on the product archive.', 'woocommerce' ),
-                'default'     => get_option('woocommerce_shop_page_display'),
-                'type'        => 'select',
-                'options'     => array(
-                    ''              => __( 'Show products', 'woocommerce' ),
-                    'subcategories' => __( 'Show categories &amp; subcategories', 'woocommerce' ),
-                    'both'          => __( 'Show both', 'woocommerce' ),
+                'id' => 'woocommerce_shop_page_display',
+                'option_key' => 'woocommerce_shop_page_display',
+                'name' => __('Shop Page Display', 'woocommerce'),
+                'desc' => __('This controls what is shown on the product archive.', 'woocommerce'),
+                'default' => get_option('woocommerce_shop_page_display'),
+                'type' => 'select',
+                'options' => array(
+                    '' => __('Show products', 'woocommerce'),
+                    'subcategories' => __('Show categories &amp; subcategories', 'woocommerce'),
+                    'both' => __('Show both', 'woocommerce'),
                 ),
             ),
 
@@ -132,7 +136,7 @@ class Test
                 'id' => 'wc_settings_tab_demo_section_end'
             )
         );
-        return apply_filters( 'wc_settings_tab_demo_settings', $settings );
+        return apply_filters('wc_settings_tab_demo_settings', $settings);
     }
 
 
@@ -190,15 +194,18 @@ class Test
 
     function testFunc()
     {
-        $woocommerce = new WooCommerce();
-        print_r($woocommerce->api_request_url('http://wc.loc/wp-json/wc/v2/products/tags/34?_jsonp=tagDetails'));
+//      wc_mail( $to, $subject, $message, $headers = "Content-Type: text/htmlrn", $attachments = "" );
+        /*self::pr(wc_get_dimension( 2, 'm' ));
+        exit;*/
+
     }
 
     /**
      *   Init  new shipping method
      */
-    function your_shipping_method_init() {
-        if ( ! class_exists( 'WC_Your_Shipping_Method' ) ) {
+    function your_shipping_method_init()
+    {
+        if (!class_exists('WC_Your_Shipping_Method')) {
             $shiping_method = new WC_Your_Shipping_Method();
         }
     }
@@ -209,9 +216,17 @@ class Test
      * @param $methods
      * @return mixed
      */
-    function add_your_shipping_method( $methods ) {
+    function add_your_shipping_method($methods)
+    {
         $methods['your_shipping_method'] = 'WC_Your_Shipping_Method';
         return $methods;
+    }
+
+    static function pr($data)
+    {
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
     }
 }
 
